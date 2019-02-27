@@ -91,4 +91,8 @@ public class Table {
 			}
 		});
 	}
+
+	public IntegerProperty getPot() {
+		return pot;
+	}
 }

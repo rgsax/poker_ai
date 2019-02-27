@@ -98,7 +98,4 @@ public class PlayerPane extends HBox {
 		
 		this.getChildren().add(finalBox);
 	}
-	
-	
-
 }
