@@ -20,9 +20,18 @@ public class DiscardState extends State {
 	}
 	
 	@Override
+	public void onExit() {
+		table.softReset();
+		super.onExit();
+	}
+	
+	@Override
 	public State next() {
 		if(currentPlayerIterator.hasNext())
 			return this;
+		
+		onExit();
+		
 		return new BettingState2(table);
 	}
 }

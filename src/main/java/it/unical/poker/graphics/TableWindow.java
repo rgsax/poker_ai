@@ -2,6 +2,9 @@ package it.unical.poker.graphics;
 
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
+import it.unical.poker.game.states.ResetTableState;
+import it.unical.poker.game.states.State;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -42,5 +45,25 @@ public class TableWindow extends BorderPane {
 	
 	private void initEH() {
 		potLabel.textProperty().bind(table.getPot().asString());
+		
+		new AnimationTimer() {
+			State state = new ResetTableState(table);
+			
+			@Override
+			public void handle(long now) {
+				
+				state.process();
+				state = state.next();
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					System.out.println("Bravo, hai rotto tutto!");
+				}
+				
+				if(state == null)
+					this.stop();
+			}
+		}.start();
 	}
 }

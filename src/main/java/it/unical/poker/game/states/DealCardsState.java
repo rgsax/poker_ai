@@ -21,7 +21,7 @@ public class DealCardsState extends State {
 	@Override
 	public State next() {
 		super.next();
-	
-		return null;
+		
+		return new BettingState(table);
 	}
 }

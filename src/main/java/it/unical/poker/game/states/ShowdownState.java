@@ -41,7 +41,7 @@ public class ShowdownState extends State {
 				rem = 0;
 			}
 			
-			player.getChips().set(player.getChips().get() + currentSplit);
+			table.chips[player.getId().get()].set(player.getChips().get() + currentSplit);
 		}
 		
 		table.getPot().set(0);		

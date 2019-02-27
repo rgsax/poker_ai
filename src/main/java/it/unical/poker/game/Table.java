@@ -95,17 +95,27 @@ public class Table {
 				return s; 
 			}
 		});
+		
+		notFoldedPlayers.bind(new IntegerBinding() {
+			
+			{
+				super.bind(hasFolded);
+			}
+			
+			@Override
+			protected int computeValue() {
+				int folded = 0;
+				
+				for(BooleanProperty bp : hasFolded)
+					if(!bp.get())
+						++folded;
+				
+				return folded;
+			}
+		});
 	}
 	
-	public int getNotFoldedPlayers() {
-		int folded = 0;
-		
-		for(BooleanProperty bp : hasFolded)
-			if(!bp.get())
-				++folded;
-		
-		return folded;
-	}
+	IntegerProperty notFoldedPlayers = new SimpleIntegerProperty();
 
 	public IntegerProperty getPot() {
 		return pot;
@@ -193,4 +203,19 @@ public class Table {
 		
 		pot.set(pot.get() + total);
 	}
+
+	public IntegerProperty getNotFoldedPlayers() {
+		return notFoldedPlayers;
+	}
+
+	public void softReset() {
+		for(int i = 0 ; i < size ; ++i) {
+			hasCalled[i].set(false);
+			hasChecked[i].set(false);
+			hasRaised[i].set(false);
+		}
+		
+	}
+	
+	
 }

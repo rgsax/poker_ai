@@ -35,16 +35,17 @@ public class BettingState extends State {
 		if(currentPlayerIterator.hasNext())
 			return this;
 		
+		if(table.getNotFoldedPlayers().get() == 1) {
+			this.onExit();
+			return new ShowdownState(table);
+		}
+		
 		if(table.getActivePlayers().get() > 0) {
 			currentPlayerIterator = table.getPlayers().iterator();
 			return this;
 		}
 		
 		this.onExit();
-		
-		if(table.getNotFoldedPlayers() == 1)
-			return new ShowdownState(table);
-		
 		return new DiscardState(table);
 	}
 }

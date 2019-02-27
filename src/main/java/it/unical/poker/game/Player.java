@@ -63,6 +63,9 @@ public class Player {
 		System.out.println(name.get() + " calling for " + toCall.intValue());
 		t.chips[id.get()].set( t.chips[id.get()].subtract(toCall).intValue() );
 		t.bets[id.get()].set(t.bet.intValue());
+		
+		t.hasChecked[id.get()].set(true);
+		t.hasCalled[id.get()].set(true);
 	}
 	
 	public void fold() {
@@ -150,13 +153,16 @@ public class Player {
 		
 		canCall = new SimpleBooleanProperty();
 		canCall.bind(chips.greaterThan(toCall).and(bet.lessThan(t.bet))
-				.and(hasFolded.not().and(hasAllIn.not())));
+				.and(hasFolded.not())
+				.and(hasAllIn.not())
+				.and(hasCalled.not()));
 		
 		canCheck = new SimpleBooleanProperty();
 		canCheck.bind(bet.isEqualTo(t.bet)
+				.and(hasChecked.not())
 				.and(hasFolded.not()
 				.and(hasAllIn.not())
-				.and(t.activePlayers.greaterThan(1))));
+				.and(t.getNotFoldedPlayers().greaterThan(1))));
 		
 		canRaise = new SimpleBooleanProperty();
 		canRaise.bind(t.hasRaised[id.get()].not().and(chips.greaterThan(toCall.add(raiseAmount)))
@@ -165,12 +171,14 @@ public class Player {
 				.and(hasRaised.not()));
 		
 		canFold = new SimpleBooleanProperty();
-		canFold.bind(t.activePlayers.greaterThan(1)
+		canFold.bind(t.getNotFoldedPlayers().greaterThan(1)
 				.and(hasFolded.not())
 				.and(hasAllIn.not()));
 		
 		canAllIn = new SimpleBooleanProperty();
-		canAllIn.bind(hasFolded.not().and(hasAllIn.not()).and(t.activePlayers.greaterThan(1)));
+		canAllIn.bind(hasFolded.not()
+				.and(hasAllIn.not())
+				.and(t.getNotFoldedPlayers().greaterThan(1)));
 	
 		t.addPlayer(this);
 	}
