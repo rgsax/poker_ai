@@ -1,5 +1,7 @@
 package it.unical.poker.game;
 
+import java.util.List;
+
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -90,6 +92,16 @@ public class Player {
 		t.hasRaised[id.get()].set(true);
 	}
 	
+	public void drawHand() {
+		cards = t.deck.draw(5);
+	}
+	
+	public void drawHand(List<Integer> indexes) {
+		for(Integer index : indexes) {
+			cards[index] = t.deck.draw();
+		}
+	}
+	
 	public Player(String s, Table t) {
 		this.t = t; 
 		name.set(s);
@@ -159,5 +171,71 @@ public class Player {
 		
 		canAllIn = new SimpleBooleanProperty();
 		canAllIn.bind(hasFolded.not().and(hasAllIn.not()).and(t.activePlayers.greaterThan(1)));
+	
+		t.addPlayer(this);
+	}
+
+	public StringProperty getName() {
+		return name;
+	}
+
+	public IntegerProperty getId() {
+		return id;
+	}
+
+	public IntegerProperty getChips() {
+		return chips;
+	}
+
+	public IntegerProperty getBet() {
+		return bet;
+	}
+
+	public BooleanProperty getHasCalled() {
+		return hasCalled;
+	}
+
+	public BooleanProperty getHasChecked() {
+		return hasChecked;
+	}
+
+	public BooleanProperty getHasRaised() {
+		return hasRaised;
+	}
+
+	public BooleanProperty getHasAllIn() {
+		return hasAllIn;
+	}
+
+	public BooleanProperty getHasFolded() {
+		return hasFolded;
+	}
+
+	public BooleanProperty getHasQuit() {
+		return hasQuit;
+	}
+
+	public BooleanProperty getCanCall() {
+		return canCall;
+	}
+
+	public BooleanProperty getCanCheck() {
+		return canCheck;
+	}
+
+	public BooleanProperty getCanAllIn() {
+		return canAllIn;
+	}
+
+	public BooleanProperty getCanFold() {
+		return canFold;
+	}
+
+	public BooleanProperty getCanRaise() {
+		return canRaise;
+	}
+
+	public IntegerProperty getRaiseAmount() {
+		return raiseAmount;
 	}
 }

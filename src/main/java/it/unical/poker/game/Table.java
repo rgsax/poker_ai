@@ -1,6 +1,8 @@
 package it.unical.poker.game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.BooleanProperty;
@@ -26,6 +28,8 @@ public class Table {
 	Deck deck = new Deck(); 
 	
 	IntegerProperty activePlayers; 
+	
+	List<Player> players = new ArrayList<Player>();
 	
 	public void shuffleDeck() {
 		deck.shuffle(); 
@@ -76,6 +80,7 @@ public class Table {
 					super.bind(hasChecked[k]);
 					super.bind(hasFolded[k]);
 					super.bind(hasQuit[k]);
+					super.bind(hasAllIn[k]);
 				}
 			}
 			
@@ -84,15 +89,108 @@ public class Table {
 				int s = 0; 
 				for (int k = 0; k < size; ++k) {
 					if (hasCalled[k].get() || hasChecked[k].get() || hasFolded[k].get() 
-							|| hasQuit[k].get()) continue;
+							|| hasQuit[k].get() || hasAllIn[k].get()) continue;
 					++s; 
 				}
 				return s; 
 			}
 		});
 	}
+	
+	public int getNotFoldedPlayers() {
+		int folded = 0;
+		
+		for(BooleanProperty bp : hasFolded)
+			if(!bp.get())
+				++folded;
+		
+		return folded;
+	}
 
 	public IntegerProperty getPot() {
 		return pot;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public BooleanProperty[] getHasCalled() {
+		return hasCalled;
+	}
+
+	public BooleanProperty[] getHasRaised() {
+		return hasRaised;
+	}
+
+	public BooleanProperty[] getHasFolded() {
+		return hasFolded;
+	}
+
+	public BooleanProperty[] getHasAllIn() {
+		return hasAllIn;
+	}
+
+	public BooleanProperty[] getHasChecked() {
+		return hasChecked;
+	}
+
+	public BooleanProperty[] getHasQuit() {
+		return hasQuit;
+	}
+
+	public IntegerProperty[] getBets() {
+		return bets;
+	}
+
+	public IntegerProperty[] getChips() {
+		return chips;
+	}
+
+	public IntegerProperty getBet() {
+		return bet;
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public IntegerProperty getActivePlayers() {
+		return activePlayers;
+	}
+
+	public void hardReset() {
+		for(int i = 0 ; i < size ; ++i) {
+			hasCalled[i].set(false);
+			hasChecked[i].set(false);
+			hasRaised[i].set(false);
+			hasFolded[i].set(false);
+			hasAllIn[i].set(false);
+			bets[i].set(0);
+		}
+		
+		pot.set(0);
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+	
+	public void removePlayer(Player player) {
+		players.remove(player);
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+	
+	public void rackBets() {
+		int total = 0;
+		for(int i = 0 ; i < size ; ++i) {
+			total += bets[i].get();
+			bets[i].set(0);
+		}
+		
+		pot.set(pot.get() + total);
 	}
 }
