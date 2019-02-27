@@ -130,7 +130,8 @@ public class Player {
 		canCheck = new SimpleBooleanProperty();
 		canCheck.bind(bet.isEqualTo(t.bet)
 				.and(hasFolded.not()
-				.and(hasAllIn.not())));
+				.and(hasAllIn.not())
+				.and(t.activePlayers.greaterThan(1))));
 		
 		canRaise = new SimpleBooleanProperty();
 		canRaise.bind(t.hasRaised[id.get()].not().and(chips.greaterThan(toCall.add(raiseAmount)))
@@ -144,6 +145,6 @@ public class Player {
 				.and(hasAllIn.not()));
 		
 		canAllIn = new SimpleBooleanProperty();
-		canAllIn.bind(hasFolded.not().and(hasAllIn.not())); 
+		canAllIn.bind(hasFolded.not().and(hasAllIn.not()).and(t.activePlayers.greaterThan(1)));
 	}
 }
