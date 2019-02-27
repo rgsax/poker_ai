@@ -9,8 +9,8 @@ public class TableWindow extends BorderPane {
 	private PlayerPane playerPane2;
 	
 	public TableWindow(Table table) {		
-		Player p1 = new Player("alice", table);
-		Player p2 = new Player("bob", table);
+		Player p1 = new Player("Alice", table);
+		Player p2 = new Player("Bob", table);
 		
 		playerPane1 = new PlayerPane(p1);
 		playerPane2 = new PlayerPane(p2);
