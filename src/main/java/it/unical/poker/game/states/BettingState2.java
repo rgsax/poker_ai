@@ -9,10 +9,10 @@ public class BettingState2 extends BettingState {
 	
 	@Override
 	public State next() {
-		if(currentPlayerIterator.hasNext())
-			return this;
-		
 		if(table.getActivePlayers().get() > 0) {
+			if(currentPlayerIterator.hasNext())
+				return this;
+			
 			currentPlayerIterator = table.getPlayers().iterator();
 			return this;
 		}

@@ -1,6 +1,12 @@
 package it.unical.poker.graphics;
 
+import java.util.ArrayList;
+
 import it.unical.poker.game.Player;
+import it.unical.poker.game.states.BettingState;
+import it.unical.poker.game.states.BettingState2;
+import it.unical.poker.game.states.DiscardState;
+import it.unical.poker.game.states.State;
 import javafx.beans.binding.IntegerBinding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +16,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import phe.Card;
+import phe.Hand;
 
 public class PlayerPane extends HBox {
 	private Player player;
@@ -18,6 +25,7 @@ public class PlayerPane extends HBox {
 	private Button raise = new Button("Raise");
 	private Button fold = new Button("Fold");
 	private Button allin = new Button("Allin");
+	private Button discard = new Button("Discard");
 	private Slider raiseSlider = new Slider();
 	private Label raiseLabel = new Label();
 	private Label chipsTextLabel = new Label("Chips:");
@@ -58,11 +66,54 @@ public class PlayerPane extends HBox {
 			}
 		}.asString());
 		
-		call.setOnMouseClicked( event -> player.call() );
-		check.setOnMouseClicked( event -> player.check() );
-		raise.setOnMouseClicked( event -> player.raise() );
-		fold.setOnMouseClicked( event -> player.fold() );
-		allin.setOnMouseClicked( event -> player.allIn() );
+		call.setOnMouseClicked( event -> { 
+			player.call(); 
+			((TableWindow)this.getParent()).resumeTimer();
+		});
+		
+		check.setOnMouseClicked(event -> {
+			player.check();
+			((TableWindow)this.getParent()).resumeTimer();
+		});
+		
+		raise.setOnMouseClicked(event -> {
+			player.raise();
+			((TableWindow)this.getParent()).resumeTimer();
+		});
+		
+		fold.setOnMouseClicked(event -> {
+			player.fold();
+			((TableWindow)this.getParent()).resumeTimer();
+		});
+		
+		allin.setOnMouseClicked(event -> {
+			player.allIn();
+			((TableWindow)this.getParent()).resumeTimer();
+		});
+		
+		discard.setOnMouseClicked(event -> {
+			Card[] cards = player.getCards();
+			System.out.println(Hand.toString(cards));
+			
+			ArrayList<Integer> selectedCards = new ArrayList<>();
+			for(int i = 0 ; i < 5 ; ++i) {
+				if(cardImages[i].isSelected())
+					selectedCards.add(i);
+			}
+			
+			player.drawHand(selectedCards);
+			
+			cards = player.getCards();
+			System.out.println(Hand.toString(cards));
+			for(int i = 0 ; i < 5 ; ++i) {
+				if(selectedCards.contains(i))
+					cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
+				
+				cardImages[i].setSelected(false);
+			}
+			
+			((TableWindow)this.getParent()).resumeTimer();
+		});
 		
 //		for(int i = 0 ; i < 5 ; ++i) {
 //			cardImages[i].disableProperty().bind(...);
@@ -78,6 +129,9 @@ public class PlayerPane extends HBox {
 		
 		HBox upperBox = new HBox(5);
 		upperBox.setAlignment(Pos.CENTER);
+		
+		upperBox.getChildren().addAll(chipsTextLabel, chipsLabel);
+		
 		for(int i = 0 ; i < 5 ; ++i) {
 			cardImages[i] = new CardView();
 			cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
@@ -88,13 +142,26 @@ public class PlayerPane extends HBox {
 			upperBox.getChildren().add(cardImages[i]);
 		}
 		
-		HBox lowerBox = new HBox(5);
+		upperBox.getChildren().addAll(betTextLabel, betLabel);
 		
-		lowerBox.getChildren().addAll(chipsTextLabel, chipsLabel, fold, check, call, raise, raiseSlider, raiseLabel, allin, betTextLabel, betLabel);
-		lowerBox.setAlignment(Pos.CENTER);
+		HBox bettingLowerBox = new HBox(5);
+		bettingLowerBox.visibleProperty()
+			.bind(State.STRING_STATE.isEqualTo(BettingState.class.getSimpleName())
+					.or(State.STRING_STATE
+							.isEqualTo(BettingState2.class.getSimpleName())));
+		
+		bettingLowerBox.getChildren().addAll(fold, check, call, raise, raiseSlider, raiseLabel, allin);
+		bettingLowerBox.setAlignment(Pos.CENTER);
+		
+		HBox discardLowerBox = new HBox(5);
+		discardLowerBox.visibleProperty()
+			.bind(State.STRING_STATE.isEqualTo(DiscardState.class.getSimpleName()));
+		
+		discardLowerBox.getChildren().add(discard);
+		discardLowerBox.setAlignment(Pos.CENTER);
 		
 		VBox finalBox = new VBox(10);
-		finalBox.getChildren().addAll(upperBox, lowerBox);
+		finalBox.getChildren().addAll(upperBox, bettingLowerBox, discardLowerBox);
 		
 		this.getChildren().add(finalBox);
 	}

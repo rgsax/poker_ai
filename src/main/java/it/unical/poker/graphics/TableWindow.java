@@ -2,9 +2,6 @@ package it.unical.poker.graphics;
 
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
-import it.unical.poker.game.states.ResetTableState;
-import it.unical.poker.game.states.State;
-import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -13,8 +10,11 @@ import javafx.scene.layout.HBox;
 public class TableWindow extends BorderPane {
 	Table table;
 	
+	private StoppableStatefulAnimationTimer timer;
+	
 	private PlayerPane playerPane1;
 	private PlayerPane playerPane2;
+	private PlayerPane playerPane3;
 	
 	private Label potTextLabel = new Label("Pot:");
 	private Label potLabel = new Label();
@@ -25,9 +25,14 @@ public class TableWindow extends BorderPane {
 		
 		Player p1 = new Player("Alice", table);
 		Player p2 = new Player("Bob", table);
+		Player p3 = new Player("Carlotta", table);
 		
 		playerPane1 = new PlayerPane(p1);
 		playerPane2 = new PlayerPane(p2);
+		playerPane3 = new PlayerPane(p3);
+		
+		
+		timer = new StoppableStatefulAnimationTimer(table);
 		
 		initGUI();
 		initEH();
@@ -41,29 +46,16 @@ public class TableWindow extends BorderPane {
 		this.setCenter(box);
 		this.setBottom(playerPane1);
 		this.setTop(playerPane2);
+		this.setLeft(playerPane3);
 	}
 	
 	private void initEH() {
 		potLabel.textProperty().bind(table.getPot().asString());
-		
-		new AnimationTimer() {
-			State state = new ResetTableState(table);
-			
-			@Override
-			public void handle(long now) {
-				
-				state.process();
-				state = state.next();
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					System.out.println("Bravo, hai rotto tutto!");
-				}
-				
-				if(state == null)
-					this.stop();
-			}
-		}.start();
+
+		timer.start();
+	}
+	
+	public void resumeTimer() {
+		timer.resume();
 	}
 }

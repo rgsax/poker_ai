@@ -16,7 +16,9 @@ public class DiscardState extends State {
 	@Override
 	public void process() {
 		Player player = currentPlayerIterator.next();
-		//player.discard();
+		System.out.println("player" + player.getId());
+		//if(player instanceof DLVPlayer)
+		//	player.discard();
 	}
 	
 	@Override
@@ -27,11 +29,14 @@ public class DiscardState extends State {
 	
 	@Override
 	public State next() {
-		if(currentPlayerIterator.hasNext())
+		if(currentPlayerIterator.hasNext()) {
 			return this;
+		}
 		
 		onExit();
+		if(table.getActivePlayers().get() > 1)
+			return new BettingState2(table);
 		
-		return new BettingState2(table);
+		return new ShowdownState(table);
 	}
 }

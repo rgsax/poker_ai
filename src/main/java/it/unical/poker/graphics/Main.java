@@ -10,7 +10,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		Table table = new Table(2);
+		Table table = new Table(3);
 		
 		
 		Scene scene = new Scene(new TableWindow(table), 800, 600);

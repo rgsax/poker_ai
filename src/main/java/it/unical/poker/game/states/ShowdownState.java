@@ -50,6 +50,11 @@ public class ShowdownState extends State {
 	@Override
 	public State next() {
 		super.next();
+		
+		table.hardReset();
+		
+		if(table.getActivePlayers().get() > 1)
+			return new DealCardsState(table);
 		return null;
 	}
 }

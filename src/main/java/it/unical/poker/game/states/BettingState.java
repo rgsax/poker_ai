@@ -18,8 +18,8 @@ public class BettingState extends State {
 	@Override
 	public void process() {
 		Player player = currentPlayerIterator.next();
-		
-		//player.doAction();
+//		if(player instanceof DLVPlayer)
+//			player.doAction();
 		
 		super.process();
 	}
@@ -32,15 +32,15 @@ public class BettingState extends State {
 	
 	@Override
 	public State next() {
-		if(currentPlayerIterator.hasNext())
-			return this;
-		
-		if(table.getNotFoldedPlayers().get() == 1) {
-			this.onExit();
-			return new ShowdownState(table);
-		}
-		
 		if(table.getActivePlayers().get() > 0) {
+			if(currentPlayerIterator.hasNext())
+				return this;
+			
+			if(table.getNotFoldedPlayers().get() == 1) {
+				this.onExit();
+				return new ShowdownState(table);
+			}
+				
 			currentPlayerIterator = table.getPlayers().iterator();
 			return this;
 		}

@@ -1,13 +1,18 @@
 package it.unical.poker.game.states;
 
 import it.unical.poker.game.Table;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public abstract class State {
 	protected Table table;
+	public static StringProperty STRING_STATE = new SimpleStringProperty();
 
 	public State(Table table) {
 		this.table = table;
 		onEnter();
+		
+		STRING_STATE.set(this.getClass().getSimpleName());
 	}
 	
 	public void onEnter() {

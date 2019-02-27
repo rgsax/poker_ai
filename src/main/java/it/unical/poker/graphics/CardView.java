@@ -1,5 +1,7 @@
 package it.unical.poker.graphics;
 
+import it.unical.poker.game.states.DiscardState;
+import it.unical.poker.game.states.State;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -39,12 +41,25 @@ public class CardView extends GridPane {
 	
 	private void initEH() {
 		this.setOnMouseClicked( event -> {
-			if(!selected)
+			setSelected(!selected);
+		});
+		
+		this.disableProperty()
+			.bind(State.STRING_STATE.isNotEqualTo(DiscardState.class.getSimpleName()));
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		if(this.selected != selected) {
+			if(selected)
 				this.getStyleClass().add("selected_card");
 			else
 				this.getStyleClass().remove(0);
 			
-			selected = !selected;
-		});
+			this.selected = selected;
+		}
 	}
 }

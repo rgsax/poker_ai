@@ -52,6 +52,17 @@ public class Player {
 		t.hasAllIn[id.get()].set(true);
 		t.bets[id.get()].set(t.bets[id.get()].get() + chips.get());
 		t.chips[id.get()].set(0);
+		
+		for (int i = 0; i < t.size; ++i) {
+			if (t.bets[i].lessThan(t.bet).getValue()) {
+				t.hasCalled[i].set(false);
+				t.hasChecked[i].set(false);
+			}
+		}
+		
+		t.hasCalled[id.get()].set(true);
+		t.hasChecked[id.get()].set(true);
+		t.hasRaised[id.get()].set(true);
 	}
 	
 	public void check() {
@@ -96,10 +107,12 @@ public class Player {
 	}
 	
 	public void drawHand() {
+		System.out.println("draw all hand");
 		cards = t.deck.draw(5);
 	}
 	
 	public void drawHand(List<Integer> indexes) {
+		System.out.println("drawing " + indexes);
 		for(Integer index : indexes) {
 			cards[index] = t.deck.draw();
 		}
