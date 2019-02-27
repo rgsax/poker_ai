@@ -1,7 +1,6 @@
 package it.unical.poker.game;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.BooleanProperty;
