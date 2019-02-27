@@ -10,6 +10,14 @@ import javafx.beans.property.StringProperty;
 import phe.Card;
 
 public class Player {
+	public Card[] getCards() {
+		return cards;
+	}
+
+	public void setCards(Card[] cards) {
+		this.cards = cards;
+	}
+
 	protected static int ID = 0;  
 	public Table t; 
 	

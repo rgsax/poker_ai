@@ -8,7 +8,8 @@ public class TableWindow extends BorderPane {
 	private PlayerPane playerPane1;
 	private PlayerPane playerPane2;
 	
-	public TableWindow(Table table) {		
+	public TableWindow(Table table) {
+		table.shuffleDeck();
 		Player p1 = new Player("Alice", table);
 		Player p2 = new Player("Bob", table);
 		

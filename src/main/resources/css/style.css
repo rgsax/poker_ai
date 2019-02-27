@@ -1,0 +1,4 @@
+.selected_card {
+	-fx-border-width: 1px;
+	-fx-border-color: magenta;
+}
