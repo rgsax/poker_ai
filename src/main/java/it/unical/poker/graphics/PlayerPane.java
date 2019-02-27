@@ -20,7 +20,10 @@ public class PlayerPane extends HBox {
 	private Button allin = new Button("Allin");
 	private Slider raiseSlider = new Slider();
 	private Label raiseLabel = new Label();
-	
+	private Label chipsTextLabel = new Label("Chips:");
+	private Label chipsLabel = new Label();
+	private Label betTextLabel = new Label("Bet:");
+	private Label betLabel = new Label();
 	private CardView[] cardImages = new CardView[5];
 	
 	public PlayerPane(Player player) {
@@ -31,12 +34,14 @@ public class PlayerPane extends HBox {
 	}
 
 	private void initEH() {
+		chipsLabel.textProperty().bind(player.chips.asString());
 		call.disableProperty().bind(player.canCall.not());
 		check.disableProperty().bind(player.canCheck.not());
 		raise.disableProperty().bind(player.canRaise.not());
 		fold.disableProperty().bind(player.canFold.not());
 		allin.disableProperty().bind(player.canAllIn.not());
 		player.raiseAmount.bind(raiseSlider.valueProperty());
+		betLabel.textProperty().bind(player.bet.asString());
 		
 		raiseSlider.setMin(0);
 		raiseSlider.maxProperty().bind(player.chips);
@@ -72,6 +77,7 @@ public class PlayerPane extends HBox {
 		Card[] cards = player.getCards();
 		
 		HBox upperBox = new HBox(5);
+		upperBox.setAlignment(Pos.CENTER);
 		for(int i = 0 ; i < 5 ; ++i) {
 			cardImages[i] = new CardView();
 			cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
@@ -82,9 +88,11 @@ public class PlayerPane extends HBox {
 			upperBox.getChildren().add(cardImages[i]);
 		}
 		
-		HBox lowerBox = new HBox();
+		HBox lowerBox = new HBox(5);
 		
-		lowerBox.getChildren().addAll(fold, check, call, raise, raiseSlider, raiseLabel, allin);
+		lowerBox.getChildren().addAll(chipsTextLabel, chipsLabel, fold, check, call, raise, raiseSlider, raiseLabel, allin, betTextLabel, betLabel);
+		lowerBox.setAlignment(Pos.CENTER);
+		
 		VBox finalBox = new VBox(10);
 		finalBox.getChildren().addAll(upperBox, lowerBox);
 		
