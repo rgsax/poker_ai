@@ -23,7 +23,13 @@ public class Table {
 	IntegerProperty pot; 
 	public IntegerProperty bet; 
 	
+	Deck deck = new Deck(); 
+	
 	IntegerProperty activePlayers; 
+	
+	public void shuffleDeck() {
+		deck.shuffle(); 
+	}
 	
 	public Table(int i) {
 		size = i; 

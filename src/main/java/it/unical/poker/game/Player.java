@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import phe.Card;
 
 public class Player {
 	protected static int ID = 0;  
@@ -33,6 +34,8 @@ public class Player {
 	public BooleanProperty canRaise;
 	public IntegerProperty raiseAmount; 
 	IntegerProperty toCall; 
+	
+	Card[] cards;
 	
 	public void allIn() {
 		System.out.println(name.get() + " goes all-in!");
@@ -83,6 +86,8 @@ public class Player {
 		this.t = t; 
 		name.set(s);
 		id.set(ID++);
+		
+		cards = t.deck.draw(5); 
 		
 		chips = new SimpleIntegerProperty();
 		chips.bind(t.chips[id.get()]);
