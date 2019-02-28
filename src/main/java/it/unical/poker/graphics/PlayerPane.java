@@ -102,16 +102,7 @@ public class PlayerPane extends HBox {
 			}
 			
 			player.drawHand(selectedCards);
-			
-			cards = player.getCards();
-			System.out.println(Hand.toString(cards));
-			for(int i = 0 ; i < 5 ; ++i) {
-				if(selectedCards.contains(i))
-					cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
-				
-				cardImages[i].setSelected(false);
-			}
-			
+						
 			((TableWindow)this.getParent()).resumeTimer();
 		});
 		

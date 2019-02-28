@@ -2,23 +2,29 @@ package it.unical.poker.game.states;
 
 import java.util.Iterator;
 
+import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
 
 public class DiscardState extends State {
 	protected Iterator<Player> currentPlayerIterator;
+	protected Player player;
 	
 	public DiscardState(Table table ) {
 		super(table);
 		currentPlayerIterator = table.getPlayers().iterator();
+		player = currentPlayerIterator.next();
 	}
 	
 	@Override
 	public void process() {
-		Player player = currentPlayerIterator.next();
-		System.out.println("player" + player.getId());
-		//if(player instanceof DLVPlayer)
-		//	player.discard();
+		if(player instanceof DLVPlayer)
+			player.discard();
+	}
+	
+	@Override
+	public Player getCurrentPlayer() {
+		return player;
 	}
 	
 	@Override
@@ -30,6 +36,7 @@ public class DiscardState extends State {
 	@Override
 	public State next() {
 		if(currentPlayerIterator.hasNext()) {
+			player = currentPlayerIterator.next();
 			return this;
 		}
 		

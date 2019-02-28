@@ -1,7 +1,8 @@
 package it.unical.poker.graphics;
 
+import it.unical.poker.game.DLVPlayer;
+import it.unical.poker.game.Player;
 import it.unical.poker.game.states.BettingState;
-import it.unical.poker.game.states.DealCardsState;
 import it.unical.poker.game.states.DiscardState;
 import it.unical.poker.game.states.ResetTableState;
 import it.unical.poker.game.states.State;
@@ -22,12 +23,17 @@ public class StoppableStatefulAnimationTimer extends AnimationTimer {
 	public void handle(long now) {
 		state.process();
 		
-		if((state instanceof BettingState || state instanceof DiscardState)) {
+		tableWindow.refreshPlayersCards();
+		
+		if(state instanceof BettingState) {
+			this.stop();
+			System.out.println("Stopping for BettingState");
+		}
+		else if(state instanceof DiscardState && !(state.getCurrentPlayer() instanceof DLVPlayer)) {
+			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
 			this.stop();
 		}
 		else {
-			if((state instanceof DealCardsState))
-				tableWindow.refreshPlayersCards();
 			state = state.next();
 		}	
 		

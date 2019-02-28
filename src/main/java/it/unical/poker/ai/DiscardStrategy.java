@@ -3,7 +3,6 @@ package it.unical.poker.ai;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import it.unical.mat.embasp.base.Handler;
@@ -24,6 +23,14 @@ public class DiscardStrategy {
 	private InputProgram program; 
 	
 	public DiscardStrategy(File f) {
+		try {
+			ASPMapper.getInstance().registerClass(DiscardAdapter.class);
+			System.out.println("DISCARD HELPER REGISTRATA");
+		} catch (ObjectNotValidException | IllegalAnnotationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
 		program = new ASPInputProgram(); 
 		program.addFilesPath(f.getAbsolutePath());
 		handler.addProgram(program); 

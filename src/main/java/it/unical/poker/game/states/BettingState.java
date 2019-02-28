@@ -8,16 +8,22 @@ import it.unical.poker.game.Table;
 public class BettingState extends State {
 	
 	protected Iterator<Player> currentPlayerIterator;
+	protected Player player;
 	
 	public BettingState(Table table) {
 		super(table);
 		
 		currentPlayerIterator = table.getPlayers().iterator();
+		player = currentPlayerIterator.next();
+	}
+	
+	@Override
+	public Player getCurrentPlayer() {
+		return player;
 	}
 	
 	@Override
 	public void process() {
-		Player player = currentPlayerIterator.next();
 //		if(player instanceof DLVPlayer)
 //			player.doAction();
 		
@@ -38,10 +44,13 @@ public class BettingState extends State {
 		}
 		
 		if(table.getActivePlayers().get() > 0) {
-			if(currentPlayerIterator.hasNext())
+			if(currentPlayerIterator.hasNext()) {
+				player = currentPlayerIterator.next();
 				return this;
+			}
 				
 			currentPlayerIterator = table.getPlayers().iterator();
+			player = currentPlayerIterator.next();
 			return this;
 		}
 		

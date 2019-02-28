@@ -1,5 +1,6 @@
 package it.unical.poker.game.states;
 
+import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -30,6 +31,10 @@ public abstract class State {
 	
 	public State next() {
 		//System.out.println("Calling next for " + this.getClass().getSimpleName());
+		return null;
+	}
+	
+	public Player getCurrentPlayer() {
 		return null;
 	}
 }
