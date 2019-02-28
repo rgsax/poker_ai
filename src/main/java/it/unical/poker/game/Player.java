@@ -113,6 +113,8 @@ public class Player {
 			cards[i] = tmp[i];
 	}
 	
+	public void discard() { }
+	
 	public void drawHand(List<Integer> indexes) {
 		System.out.println("drawing " + indexes);
 		for(Integer index : indexes) {

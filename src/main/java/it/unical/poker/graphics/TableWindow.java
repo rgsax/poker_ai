@@ -1,5 +1,6 @@
 package it.unical.poker.graphics;
 
+import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
 import javafx.geometry.Pos;
@@ -25,7 +26,7 @@ public class TableWindow extends BorderPane {
 		this.table = table;
 		
 		Player p1 = new Player("Alice", table);
-		Player p2 = new Player("Bob", table);
+		Player p2 = new DLVPlayer("Bob", table);
 		
 		playerPane1 = new PlayerPane(p1);
 		playerPane2 = new PlayerPane(p2);
