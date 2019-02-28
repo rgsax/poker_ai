@@ -1,4 +1,4 @@
-package it.unical.poker.ai;
+package it.unical.poker.a; 
 
 public class CardAdapter {
 	String suit; 
