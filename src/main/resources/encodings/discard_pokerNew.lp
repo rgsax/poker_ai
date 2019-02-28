@@ -1,12 +1,12 @@
-mano(V, cuori) :- in_hand_HELPER(V, 3).
-mano(V, fiori) :- in_hand_HELPER(V, 2).
-mano(V, quadri) :- in_hand_HELPER(V, 1).
-mano(V, picche) :- in_hand_HELPER(V, 4).
+mano(V, cuori) :- in_hand_HELPER(V, hearts).
+mano(V, fiori) :- in_hand_HELPER(V, clubs).
+mano(V, quadri) :- in_hand_HELPER(V, diamonds).
+mano(V, picche) :- in_hand_HELPER(V, spades).
 
-discard_HELPER(V, 3) :- scarta(V, cuori).
-discard_HELPER(V, 2) :- scarta(V, fiori).
-discard_HELPER(V, 1) :- scarta(V, quadri).
-discard_HELPER(V, 4) :- scarta(V, picche).
+discard_HELPER(V, hearts) :- scarta(V, cuori).
+discard_HELPER(V, clubs) :- scarta(V, fiori).
+discard_HELPER(V, diamonds) :- scarta(V, quadri).
+discard_HELPER(V, spades) :- scarta(V, picche).
 
 
 seme(cuori). 
