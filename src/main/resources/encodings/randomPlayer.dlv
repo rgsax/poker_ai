@@ -1,0 +1,6 @@
+fold | raise | call | allin | check.
+:- fold, not can_fold.
+:- check, not can_check.
+:- allin, not can_allin.
+:- raise, not can_raise.
+:- call, not can_call.

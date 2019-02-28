@@ -9,6 +9,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.WritableBooleanValue;
 
 public class Table {
 	int size; 
@@ -232,6 +233,10 @@ public class Table {
 
 	public void increaseAnte() {
 		ante.set(ante.get() + 5);		
+	}
+
+	public IntegerProperty getAnte() {
+		return ante; 
 	}
 	
 	
