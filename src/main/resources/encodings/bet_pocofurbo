@@ -1,0 +1,12 @@
+%INPUT: pot(POT), win_probability(WP), min_bet(MB), hand_points(P), chips(C).
+
+fold | doCall | doCheck | doRaise.
+
+:- fold, not can(fold).
+:- doCall, not can(call).
+:- doCheck, not can(check).
+:- doRaise, not can(raise).
+
+:~ not fold, win_probability(WP), WP < 0.2. [10@2]
+
+amount(N) :- raise, win_probability(WP), chips(C), N = C * WP.
