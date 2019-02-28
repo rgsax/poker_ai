@@ -22,6 +22,7 @@ public class Table {
 	public IntegerProperty[] bets;
 	public IntegerProperty[] chips; 
 
+	IntegerProperty ante;
 	IntegerProperty pot; 
 	public IntegerProperty bet; 
 	
@@ -96,6 +97,9 @@ public class Table {
 				return s; 
 			}
 		});
+		
+		ante = new SimpleIntegerProperty();
+		ante.set(5);
 		
 		notFoldedPlayers.bind(new IntegerBinding() {
 			
@@ -180,6 +184,14 @@ public class Table {
 			bets[i].set(0);
 		}
 		
+		for(Player player : players) {
+			if(player.chips.get() < ante.get()) {
+				hasQuit[player.getId().get()].set(true);
+			}
+		}
+		
+		players.removeIf(p -> hasQuit[p.getId().get()].get());
+		
 		pot.set(0);
 	}
 
@@ -216,6 +228,10 @@ public class Table {
 			hasRaised[i].set(false);
 		}
 		
+	}
+
+	public void increaseAnte() {
+		ante.set(ante.get() + 5);		
 	}
 	
 	

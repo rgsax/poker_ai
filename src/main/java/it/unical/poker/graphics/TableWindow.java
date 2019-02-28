@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class TableWindow extends BorderPane {
 	Table table;
@@ -14,45 +15,60 @@ public class TableWindow extends BorderPane {
 	
 	private PlayerPane playerPane1;
 	private PlayerPane playerPane2;
-	private PlayerPane playerPane3;
 	
 	private Label potTextLabel = new Label("Pot:");
 	private Label potLabel = new Label();
+	private Label betTextLabel = new Label("Bet:");
+	private Label betLabel = new Label();
 	
 	public TableWindow(Table table) {
 		this.table = table;
-		this.table.shuffleDeck();
 		
 		Player p1 = new Player("Alice", table);
 		Player p2 = new Player("Bob", table);
-		Player p3 = new Player("Carlotta", table);
 		
 		playerPane1 = new PlayerPane(p1);
 		playerPane2 = new PlayerPane(p2);
-		playerPane3 = new PlayerPane(p3);
 		
 		
-		timer = new StoppableStatefulAnimationTimer(table);
+		timer = new StoppableStatefulAnimationTimer(this);
 		
 		initGUI();
 		initEH();
 	}
 	
+	public Table getTable() {
+		return table;
+	}
+	
 	private void initGUI() {
-		HBox box = new HBox(5);
+		HBox box1 = new HBox(5);
+		box1.setAlignment(Pos.CENTER);
+		box1.getChildren().addAll(potTextLabel, potLabel);
+		
+		HBox box2 = new HBox(5);
+		box2.setAlignment(Pos.CENTER);
+		box2.getChildren().addAll(betTextLabel, betLabel);
+		
+		VBox box = new VBox(5);
 		box.setAlignment(Pos.CENTER);
-		box.getChildren().addAll(potTextLabel, potLabel);
+		box.getChildren().addAll(box1, box2);
 		
 		this.setCenter(box);
 		this.setBottom(playerPane1);
 		this.setTop(playerPane2);
-		this.setLeft(playerPane3);
 	}
 	
 	private void initEH() {
 		potLabel.textProperty().bind(table.getPot().asString());
-
+		betLabel.textProperty().bind(table.getBet().asString());
+		
 		timer.start();
+	}
+	
+	public void refreshPlayersCards() {
+		playerPane1.refreshAllCards();
+		playerPane2.refreshAllCards();
 	}
 	
 	public void resumeTimer() {

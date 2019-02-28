@@ -1,7 +1,7 @@
 package it.unical.poker.graphics;
 
-import it.unical.poker.game.Table;
 import it.unical.poker.game.states.BettingState;
+import it.unical.poker.game.states.DealCardsState;
 import it.unical.poker.game.states.DiscardState;
 import it.unical.poker.game.states.ResetTableState;
 import it.unical.poker.game.states.State;
@@ -9,10 +9,13 @@ import javafx.animation.AnimationTimer;
 
 public class StoppableStatefulAnimationTimer extends AnimationTimer {
 	State state;
+	TableWindow tableWindow;
 	
-	public StoppableStatefulAnimationTimer(Table table) {
+	public StoppableStatefulAnimationTimer(TableWindow tableWindow) {
 		super();
-		state = new ResetTableState(table);
+		
+		this.tableWindow = tableWindow;
+		state = new ResetTableState(tableWindow.getTable());
 	}	
 	
 	@Override
@@ -22,8 +25,11 @@ public class StoppableStatefulAnimationTimer extends AnimationTimer {
 		if((state instanceof BettingState || state instanceof DiscardState)) {
 			this.stop();
 		}
-		else
+		else {
+			if((state instanceof DealCardsState))
+				tableWindow.refreshPlayersCards();
 			state = state.next();
+		}	
 		
 		try {
 			Thread.sleep(1000);

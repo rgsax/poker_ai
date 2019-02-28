@@ -29,6 +29,8 @@ public class ShowdownState extends State {
 			if(playerPoints.get(player).equals(min)) {
 				winners.add(player);
 			}
+			
+			System.out.println(player.getName().get() + "->" + playerPoints.get(player));
 		}
 		
 		int potSplit = table.getPot().get() / winners.size();
@@ -54,7 +56,7 @@ public class ShowdownState extends State {
 		table.hardReset();
 		
 		if(table.getActivePlayers().get() > 1)
-			return new DealCardsState(table);
+			return new ResetTableState(table);
 		return null;
 	}
 }

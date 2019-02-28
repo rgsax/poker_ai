@@ -13,8 +13,10 @@ public class DealCardsState extends State {
 	public void process() {
 		table.shuffleDeck();
 		for(Player player : table.getPlayers()) {
+			player.payAnte();
 			player.drawHand();
 		}
+		
 		super.process();
 	}
 	

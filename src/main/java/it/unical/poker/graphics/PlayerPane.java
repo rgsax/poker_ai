@@ -125,22 +125,24 @@ public class PlayerPane extends HBox {
 		this.setAlignment(Pos.CENTER);
 		this.setPadding(new Insets(10));
 		
-		Card[] cards = player.getCards();
 		
 		HBox upperBox = new HBox(5);
 		upperBox.setAlignment(Pos.CENTER);
 		
-		upperBox.getChildren().addAll(chipsTextLabel, chipsLabel);
+		upperBox.getChildren().addAll(new Label(player.getName().get()), chipsTextLabel, chipsLabel);
 		
-		for(int i = 0 ; i < 5 ; ++i) {
-			cardImages[i] = new CardView();
-			cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
-			
-			cardImages[i].setPreserveRatio(true);
-			cardImages[i].setFitWidth(80);
-			
-			upperBox.getChildren().add(cardImages[i]);
-		}
+		Card[] cards = player.getCards();
+		if(cards != null)
+			for(int i = 0 ; i < 5 ; ++i) {
+				cardImages[i] = new CardView();
+				if(cards[i] != null)
+					cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
+				
+				cardImages[i].setPreserveRatio(true);
+				cardImages[i].setFitWidth(80);
+				
+				upperBox.getChildren().add(cardImages[i]);
+			}
 		
 		upperBox.getChildren().addAll(betTextLabel, betLabel);
 		
@@ -164,5 +166,14 @@ public class PlayerPane extends HBox {
 		finalBox.getChildren().addAll(upperBox, bettingLowerBox, discardLowerBox);
 		
 		this.getChildren().add(finalBox);
+	}
+	
+	public void refreshAllCards() {
+		Card[] cards = player.getCards();
+		if(cards != null)
+			for(int i = 0 ; i < 5 ; ++i) {
+				if(cards[i] != null)
+					cardImages[i].setImage(CardImage.getCardImage(cards[i].toString()));
+			}
 	}
 }

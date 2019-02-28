@@ -16,20 +16,20 @@ public abstract class State {
 	}
 	
 	public void onEnter() {
-		System.out.println("Entering on " + this.getClass().getSimpleName());
+		//System.out.println("Entering on " + this.getClass().getSimpleName());
 	}
 
 
 	public void onExit() {
-		System.out.println("Exiting from " + this.getClass().getSimpleName());
+		//System.out.println("Exiting from " + this.getClass().getSimpleName());
 	}
 
 	public void process() {
-		System.out.println("Processing for " + this.getClass().getSimpleName());
+		//System.out.println("Processing for " + this.getClass().getSimpleName());
 	}
 	
 	public State next() {
-		System.out.println("Calling next for " + this.getClass().getSimpleName());
+		//System.out.println("Calling next for " + this.getClass().getSimpleName());
 		return null;
 	}
 }

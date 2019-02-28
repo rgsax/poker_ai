@@ -45,7 +45,7 @@ public class Player {
 	public IntegerProperty raiseAmount; 
 	IntegerProperty toCall; 
 	
-	Card[] cards;
+	Card[] cards = new Card[5];
 	
 	public void allIn() {
 		System.out.println(name.get() + " goes all-in!");
@@ -108,7 +108,9 @@ public class Player {
 	
 	public void drawHand() {
 		System.out.println("draw all hand");
-		cards = t.deck.draw(5);
+		Card[] tmp = t.deck.draw(5);
+		for(int i = 0 ; i < 5 ; ++i)
+			cards[i] = tmp[i];
 	}
 	
 	public void drawHand(List<Integer> indexes) {
@@ -122,8 +124,6 @@ public class Player {
 		this.t = t; 
 		name.set(s);
 		id.set(ID++);
-		
-		cards = t.deck.draw(5); 
 		
 		chips = new SimpleIntegerProperty();
 		chips.bind(t.chips[id.get()]);
@@ -258,5 +258,13 @@ public class Player {
 
 	public IntegerProperty getRaiseAmount() {
 		return raiseAmount;
+	}
+	
+	public void payAnte() {
+		System.out.println("Player " + name.get() + " is paying " + t.ante.get());
+		
+		t.chips[id.get()].set(t.chips[id.get()].get() - t.ante.get());
+		t.bets[id.get()].set(t.bets[id.get()].get() + t.ante.get());
+		
 	}
 }
