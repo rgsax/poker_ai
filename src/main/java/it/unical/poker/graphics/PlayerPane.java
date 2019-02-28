@@ -39,78 +39,77 @@ public class PlayerPane extends HBox {
 		this.player = player;
 		
 		initGUI();
-		if(!(player instanceof DLVPlayer))
-				initEH();
+		initEH();
 	}
 
 	private void initEH() {
 		chipsLabel.textProperty().bind(player.chips.asString());
-		call.disableProperty().bind(player.canCall.not());
-		check.disableProperty().bind(player.canCheck.not());
-		raise.disableProperty().bind(player.canRaise.not());
-		fold.disableProperty().bind(player.canFold.not());
-		allin.disableProperty().bind(player.canAllIn.not());
-		player.raiseAmount.bind(raiseSlider.valueProperty());
 		betLabel.textProperty().bind(player.bet.asString());
 		
-		raiseSlider.setMin(0);
-		raiseSlider.maxProperty().bind(player.chips);
-		
-		raiseLabel.textProperty().bind(new IntegerBinding() {
+		if(!(player instanceof DLVPlayer)) {
+			call.disableProperty().bind(player.canCall.not());
+			check.disableProperty().bind(player.canCheck.not());
+			raise.disableProperty().bind(player.canRaise.not());
+			fold.disableProperty().bind(player.canFold.not());
+			allin.disableProperty().bind(player.canAllIn.not());
+			player.raiseAmount.bind(raiseSlider.valueProperty());
 			
-			{
-				super.bind(raiseSlider.valueProperty());
-			}
 			
-			@Override
-			protected int computeValue() {
-				return (int)raiseSlider.getValue();
-			}
-		}.asString());
-		
-		call.setOnMouseClicked( event -> { 
-			player.call(); 
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-		check.setOnMouseClicked(event -> {
-			player.check();
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-		raise.setOnMouseClicked(event -> {
-			player.raise();
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-		fold.setOnMouseClicked(event -> {
-			player.fold();
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-		allin.setOnMouseClicked(event -> {
-			player.allIn();
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-		discard.setOnMouseClicked(event -> {
-			Card[] cards = player.getCards();
-			System.out.println(Hand.toString(cards));
+			raiseSlider.setMin(0);
+			raiseSlider.maxProperty().bind(player.chips);
 			
-			ArrayList<Integer> selectedCards = new ArrayList<>();
-			for(int i = 0 ; i < 5 ; ++i) {
-				if(cardImages[i].isSelected())
-					selectedCards.add(i);
-			}
+			raiseLabel.textProperty().bind(new IntegerBinding() {
+				
+				{
+					super.bind(raiseSlider.valueProperty());
+				}
+				
+				@Override
+				protected int computeValue() {
+					return (int)raiseSlider.getValue();
+				}
+			}.asString());
 			
-			player.drawHand(selectedCards);
-						
-			((TableWindow)this.getParent()).resumeTimer();
-		});
-		
-//		for(int i = 0 ; i < 5 ; ++i) {
-//			cardImages[i].disableProperty().bind(...);
-//		}
+			call.setOnMouseClicked( event -> { 
+				player.call(); 
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+			
+			check.setOnMouseClicked(event -> {
+				player.check();
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+			
+			raise.setOnMouseClicked(event -> {
+				player.raise();
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+			
+			fold.setOnMouseClicked(event -> {
+				player.fold();
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+			
+			allin.setOnMouseClicked(event -> {
+				player.allIn();
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+			
+			discard.setOnMouseClicked(event -> {
+				Card[] cards = player.getCards();
+				System.out.println(Hand.toString(cards));
+				
+				ArrayList<Integer> selectedCards = new ArrayList<>();
+				for(int i = 0 ; i < 5 ; ++i) {
+					if(cardImages[i].isSelected())
+						selectedCards.add(i);
+				}
+				
+				player.drawHand(selectedCards);
+							
+				((TableWindow)this.getParent()).resumeTimer();
+			});
+		}
 	}
 
 	private void initGUI() {
