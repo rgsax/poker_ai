@@ -2,6 +2,7 @@ package it.unical.poker.game.states;
 
 import java.util.Iterator;
 
+import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
 
@@ -24,8 +25,8 @@ public class BettingState extends State {
 	
 	@Override
 	public void process() {
-//		if(player instanceof DLVPlayer)
-//			player.doAction();
+		if(player instanceof DLVPlayer)
+			player.bet();
 		
 		super.process();
 	}

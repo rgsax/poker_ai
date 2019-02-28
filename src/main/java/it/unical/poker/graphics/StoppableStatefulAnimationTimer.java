@@ -24,14 +24,18 @@ public class StoppableStatefulAnimationTimer extends AnimationTimer {
 		
 		tableWindow.refreshPlayersCards();
 		
-		if(state instanceof BettingState) {
+//		if(state instanceof BettingState) {
+//			this.stop();
+//			System.out.println("Stopping for BettingState");
+//		}
+		
+		
+//		else
+		
+		if( ( state instanceof BettingState || state instanceof DiscardState)  && !(state.getCurrentPlayer() instanceof DLVPlayer)) {
+//			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
 			this.stop();
-			System.out.println("Stopping for BettingState");
-		}
-		else if(state instanceof DiscardState && !(state.getCurrentPlayer() instanceof DLVPlayer)) {
-			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
-			this.stop();
-		}
+		} 
 		else {
 			state = state.next();
 		}	

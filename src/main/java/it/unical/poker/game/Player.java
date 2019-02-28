@@ -114,6 +114,7 @@ public class Player {
 	}
 	
 	public void discard() { }
+	public void bet() { }
 	
 	public void drawHand(List<Integer> indexes) {
 		System.out.println("drawing " + indexes);

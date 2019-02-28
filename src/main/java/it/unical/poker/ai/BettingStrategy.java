@@ -25,37 +25,44 @@ public class BettingStrategy {
 	
 	public String evaluate(Player p, Table t) {
 		if (p.canCall.get()) {
-			program.addProgram("can_call");
+			program.addProgram("can_call.");
 		}
 		
 		if (p.canCheck.get()) {
-			program.addProgram("can_check");
+			program.addProgram("can_check.");
 		}
 		
 		if (p.canRaise.get()) {
-			program.addProgram("can_raise");
+			program.addProgram("can_raise.");
 		}
 		
 		if (p.canFold.get()) {
-			program.addProgram("can_fold");
+			program.addProgram("can_fold.");
 		}
 		
 		if (p.canAllIn.get()) {
-			program.addProgram("can_alllin");
+			program.addProgram("can_allin.");
 		}
 		
 		// TODO: probabilità vera
-		program.addProgram(String.format("probability(%f)", 0.5)); 
-		program.addProgram(String.format("pot(%d)", t.getPot().get()));
-		program.addProgram(String.format("chips(%d)", p.getChips().get()));
-		program.addProgram(String.format("myBet(%d)", p.getBet().get()));
-		program.addProgram(String.format("minimumBet(%d)", t.getBet().get()));
-		program.addProgram(String.format("ante(%d)", t.getAnte().get())); 
+		program.addProgram(String.format("probability(0,52).")); 
+		program.addProgram(String.format("pot(%d).", t.getPot().get()));
+		program.addProgram(String.format("chips(%d).", p.getChips().get()));
+		program.addProgram(String.format("myBet(%d).", p.getBet().get()));
+		program.addProgram(String.format("minimumBet(%d).", t.getBet().get()));
+		program.addProgram(String.format("ante(%d).", t.getAnte().get())); 
 		
 		AnswerSets as = (AnswerSets) handler.startSync();
+		System.out.println("BETTING PROGRAM: " + program.getPrograms());
+		System.out.println(as.getAnswersets().size());
+		System.out.println("ERRORS:" + as.getErrors());
+		System.out.println("OUTPUT: " + as.getOutput());
+//		System.exit(21);
+
+
 		AnswerSet a = as.getAnswersets().get(0); 
 		
-		System.out.println("BETTING PROGRAM: " + program.getPrograms());
+		
 					
 		try {
 			List<String> atoms = a.getAnswerSet(); 

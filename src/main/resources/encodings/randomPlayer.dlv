@@ -4,3 +4,8 @@ fold | raise | call | allin | check.
 :- allin, not can_allin.
 :- raise, not can_raise.
 :- call, not can_call.
+
+:~ fold. [10@1]
+:~ call. [5@1]
+:~ allin. [20@1]
+:~ check. [1@1]
