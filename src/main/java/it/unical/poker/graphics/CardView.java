@@ -29,6 +29,7 @@ public class CardView extends GridPane {
 
 	public void setImage(Image image) {
 		view.setImage(image);
+		setSelected(false);
 	}
 	
 	public void setPreserveRatio(boolean value) {

@@ -2,6 +2,7 @@ package it.unical.poker.graphics;
 
 import java.util.ArrayList;
 
+import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.states.BettingState;
 import it.unical.poker.game.states.BettingState2;
@@ -38,7 +39,8 @@ public class PlayerPane extends HBox {
 		this.player = player;
 		
 		initGUI();
-		initEH();
+		if(!(player instanceof DLVPlayer))
+				initEH();
 	}
 
 	private void initEH() {
@@ -137,24 +139,28 @@ public class PlayerPane extends HBox {
 		
 		upperBox.getChildren().addAll(betTextLabel, betLabel);
 		
-		HBox bettingLowerBox = new HBox(5);
-		bettingLowerBox.visibleProperty()
-			.bind(State.STRING_STATE.isEqualTo(BettingState.class.getSimpleName())
-					.or(State.STRING_STATE
-							.isEqualTo(BettingState2.class.getSimpleName())));
-		
-		bettingLowerBox.getChildren().addAll(fold, check, call, raise, raiseSlider, raiseLabel, allin);
-		bettingLowerBox.setAlignment(Pos.CENTER);
-		
-		HBox discardLowerBox = new HBox(5);
-		discardLowerBox.visibleProperty()
-			.bind(State.STRING_STATE.isEqualTo(DiscardState.class.getSimpleName()));
-		
-		discardLowerBox.getChildren().add(discard);
-		discardLowerBox.setAlignment(Pos.CENTER);
-		
 		VBox finalBox = new VBox(10);
-		finalBox.getChildren().addAll(upperBox, bettingLowerBox, discardLowerBox);
+		finalBox.getChildren().add(upperBox);
+				
+		if(!(player instanceof DLVPlayer)) {
+			HBox bettingLowerBox = new HBox(5);
+			bettingLowerBox.visibleProperty()
+				.bind(State.STRING_STATE.isEqualTo(BettingState.class.getSimpleName())
+						.or(State.STRING_STATE
+								.isEqualTo(BettingState2.class.getSimpleName())));
+			
+			bettingLowerBox.getChildren().addAll(fold, check, call, raise, raiseSlider, raiseLabel, allin);
+			bettingLowerBox.setAlignment(Pos.CENTER);
+			
+			HBox discardLowerBox = new HBox(5);
+			discardLowerBox.visibleProperty()
+				.bind(State.STRING_STATE.isEqualTo(DiscardState.class.getSimpleName()));
+			
+			discardLowerBox.getChildren().add(discard);
+			discardLowerBox.setAlignment(Pos.CENTER);
+		
+			finalBox.getChildren().addAll(bettingLowerBox, discardLowerBox);
+		}
 		
 		this.getChildren().add(finalBox);
 	}

@@ -1,7 +1,6 @@
 package it.unical.poker.graphics;
 
 import it.unical.poker.game.DLVPlayer;
-import it.unical.poker.game.Player;
 import it.unical.poker.game.states.BettingState;
 import it.unical.poker.game.states.DiscardState;
 import it.unical.poker.game.states.ResetTableState;

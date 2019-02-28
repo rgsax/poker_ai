@@ -1,10 +1,7 @@
 package it.unical.poker.ai;
 
 import it.unical.mat.embasp.languages.Id;
-import it.unical.mat.embasp.languages.IllegalAnnotationException;
-import it.unical.mat.embasp.languages.ObjectNotValidException;
 import it.unical.mat.embasp.languages.Param;
-import it.unical.mat.embasp.languages.asp.ASPMapper;
 import phe.Card;
 
 @Id("discard_HELPER")
