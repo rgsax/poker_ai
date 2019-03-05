@@ -51,6 +51,7 @@ public class BettingStrategy {
 		
 		int probability = (int)(Probability.simulateHands(player.getCards(), 1000000) * 100);
 		
+		program.addProgram(Hand.handRank(player.getCards()).toString().toLowerCase() + ".");
 		program.addProgram(String.format("probability(%d).", probability)); 
 		program.addProgram(String.format("pot(%d).", virtualPot));
 		program.addProgram(String.format("chips(%d).", player.getChips().get()));
