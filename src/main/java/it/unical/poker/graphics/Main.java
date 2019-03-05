@@ -16,6 +16,7 @@ public class Main extends Application{
 		Scene scene = new Scene(new TableWindow(table), 800, 600);
 		primaryStage.setScene(scene);
 		
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 	

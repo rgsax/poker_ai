@@ -61,6 +61,8 @@ public class TableWindow extends BorderPane {
 		this.setCenter(box);
 		this.setBottom(playerPane1);
 		this.setTop(playerPane2);
+		
+		this.setLeft(new LogArea());
 	}
 	
 	private void initEH() {
