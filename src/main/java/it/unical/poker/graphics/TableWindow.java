@@ -3,8 +3,11 @@ package it.unical.poker.graphics;
 import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
+import it.unical.poker.game.states.ShowdownState;
+import it.unical.poker.game.states.State;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -63,6 +66,11 @@ public class TableWindow extends BorderPane {
 	private void initEH() {
 		potLabel.textProperty().bind(table.getPot().asString());
 		betLabel.textProperty().bind(table.getBet().asString());
+		
+		this.setOnKeyPressed(event -> {
+			if(event.getCode().equals(KeyCode.ENTER) && State.STRING_STATE.get().equals(ShowdownState.class.getSimpleName()))
+				resumeTimer();
+		});
 		
 		timer.start();
 	}

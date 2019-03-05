@@ -25,7 +25,6 @@ public class DiscardStrategy {
 	public DiscardStrategy(File f) {
 		try {
 			ASPMapper.getInstance().registerClass(DiscardAdapter.class);
-			System.out.println("DISCARD HELPER REGISTRATA");
 		} catch (ObjectNotValidException | IllegalAnnotationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +75,6 @@ public class DiscardStrategy {
 	public static void main(String[] args) {
 		try {
 			ASPMapper.getInstance().registerClass(DiscardAdapter.class);
-			System.out.println("DISCARD HELPER REGISTRATA");
 		} catch (ObjectNotValidException | IllegalAnnotationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

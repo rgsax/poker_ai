@@ -107,7 +107,6 @@ public class Player {
 	}
 	
 	public void drawHand() {
-		System.out.println("draw all hand");
 		Card[] tmp = t.deck.draw(5);
 		for(int i = 0 ; i < 5 ; ++i)
 			cards[i] = tmp[i];
@@ -117,7 +116,6 @@ public class Player {
 	public void bet() { }
 	
 	public void drawHand(List<Integer> indexes) {
-		System.out.println("drawing " + indexes);
 		for(Integer index : indexes) {
 			cards[index] = t.deck.draw();
 		}
@@ -269,5 +267,9 @@ public class Player {
 		t.chips[id.get()].set(t.chips[id.get()].get() - t.ante.get());
 		t.bets[id.get()].set(t.bets[id.get()].get() + t.ante.get());
 		
+	}
+
+	public IntegerProperty getToCall() {
+		return toCall;
 	}
 }

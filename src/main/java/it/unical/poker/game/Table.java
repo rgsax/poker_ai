@@ -91,7 +91,6 @@ public class Table {
 				for (int k = 0; k < size; ++k) {
 					if (hasCalled[k].get() || hasChecked[k].get() || hasFolded[k].get() 
 							|| hasQuit[k].get() || hasAllIn[k].get()) continue;
-					System.out.println("player " + k + " is still active");
 					++s; 
 				}
 				return s; 
@@ -236,6 +235,15 @@ public class Table {
 
 	public IntegerProperty getAnte() {
 		return ante; 
+	}
+
+	public int getTotalBets() {
+		int tot = 0;
+		for(int i = 0 ; i < size ; ++i) {
+			tot += bets[i].get();
+		}
+		
+		return tot;
 	}
 	
 	

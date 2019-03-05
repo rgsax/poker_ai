@@ -1,5 +1,6 @@
 package it.unical.poker.graphics;
 
+
 import java.util.ArrayList;
 
 import it.unical.poker.game.DLVPlayer;
@@ -12,6 +13,7 @@ import javafx.beans.binding.IntegerBinding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
@@ -34,6 +36,8 @@ public class PlayerPane extends HBox {
 	private Label betTextLabel = new Label("Bet:");
 	private Label betLabel = new Label();
 	private CardView[] cardImages = new CardView[5];
+	
+	private CheckBox showCards = new CheckBox("Show cards");
 	
 	public PlayerPane(Player player) {
 		this.player = player;
@@ -110,6 +114,11 @@ public class PlayerPane extends HBox {
 				((TableWindow)this.getParent()).resumeTimer();
 			});
 		}
+		else {
+			for(int i = 0 ; i < 5 ; ++i) {
+				cardImages[i].visibleProperty().bind(showCards.selectedProperty());
+			}
+		}
 	}
 
 	private void initGUI() {
@@ -159,6 +168,10 @@ public class PlayerPane extends HBox {
 			discardLowerBox.setAlignment(Pos.CENTER);
 		
 			finalBox.getChildren().addAll(bettingLowerBox, discardLowerBox);
+		}
+		else {
+			upperBox.getChildren().add(showCards);
+			showCards.setSelected(false);
 		}
 		
 		this.getChildren().add(finalBox);

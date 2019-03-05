@@ -4,6 +4,7 @@ import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.states.BettingState;
 import it.unical.poker.game.states.DiscardState;
 import it.unical.poker.game.states.ResetTableState;
+import it.unical.poker.game.states.ShowdownState;
 import it.unical.poker.game.states.State;
 import javafx.animation.AnimationTimer;
 
@@ -36,6 +37,9 @@ public class StoppableStatefulAnimationTimer extends AnimationTimer {
 //			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
 			this.stop();
 		} 
+		else if(state instanceof ShowdownState){
+			this.stop();
+		}
 		else {
 			state = state.next();
 		}	

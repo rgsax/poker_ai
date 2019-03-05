@@ -5,7 +5,52 @@ fold | raise | call | allin | check.
 :- raise, not can_raise.
 :- call, not can_call.
 
-:~ fold. [10@1]
-:~ call. [5@1]
-:~ allin. [20@1]
-:~ check. [1@1]
+% FOLD
+expectedValue(-V) :- fold, myBet(V).
+
+% RAISE
+raiseAmount(V) :- raise, V = (TC + (MIN + MAX)/3), toCall(TC), minRaise(MIN), maxRaise(MAX).
+expectedValue(V) :- raise, raiseAmount(RA), pot(POT), probability(P), myBet(B), 
+	V = P * (POT + RA) - (100 - P) * (RA + B).
+
+% CALL
+expectedValue(V) :- call, toCall(C), myBet(B), pot(POT), probability(P), 
+	V = P * POT - (100 - P) * (B + C).
+	
+% CHECK
+expectedValue(V) :- check, myBet(B), pot(POT), probability(P), 
+	V = P * POT.
+
+% ALLIN
+expectedValue(V) :- allin, probability(P), chips(C), pot(POT), 
+	V = P * POT - (100 - P) * C.
+
+:~ expectedValue(V), N = 300000 - V. [N@10, V]
+
+:~ fold, points(P), P < 1610. [P@20]
+
+
+
+
+
+
+
+% FOLD
+fold_expectedValue(-V) :- can_fold, myBet(V).
+
+% RAISE
+test_raiseAmount(V) :- can_raise, V = (TC + (MIN + MAX)/3), toCall(TC), minRaise(MIN), maxRaise(MAX).
+raise_expectedValue(V) :- can_raise, myBet(B), test_raiseAmount(RA), pot(POT), probability(P), 
+	V = P * (POT + RA) - (100 - P) * (RA + B).
+
+% CALL
+call_expectedValue(V) :- can_call, toCall(C), myBet(B), pot(POT), probability(P), 
+	V = P * POT - (100 - P) * (B + C).
+	
+% CHECK
+check_expectedValue(V) :- can_check, myBet(B), pot(POT), probability(P), 
+	V = P * POT - (100 - P) * B.
+
+% ALLIN
+allin_expectedValue(V) :- can_allin, probability(P), chips(C), pot(POT), 
+	V = P * POT - (100 - P) * C.

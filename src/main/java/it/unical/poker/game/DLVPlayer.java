@@ -31,8 +31,7 @@ public class DLVPlayer extends Player {
 		} else if (action.equals("check")) {
 			check();  
 		} else if (action.equals("raise")) {
-			// niente 
-			call(); 
+			this.raise();
 		} else if (action.equals("allin")) {
 			allIn();  
 		}

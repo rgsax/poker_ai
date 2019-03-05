@@ -5,6 +5,7 @@ import java.util.Iterator;
 import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
+import phe.Hand;
 
 public class DiscardState extends State {
 	protected Iterator<Player> currentPlayerIterator;
@@ -18,8 +19,12 @@ public class DiscardState extends State {
 	
 	@Override
 	public void process() {
-		if(player instanceof DLVPlayer)
+		if(player instanceof DLVPlayer) {
+			System.out.println(player.getName().get());
+			System.out.println("before: " + Hand.toString(player.getCards()));
 			player.discard();
+			System.out.println("after: " + Hand.toString(player.getCards()));
+		}
 	}
 	
 	@Override

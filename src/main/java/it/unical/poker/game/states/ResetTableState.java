@@ -1,5 +1,7 @@
 package it.unical.poker.game.states;
 
+import java.util.Collections;
+
 import it.unical.poker.game.Table;
 
 public class ResetTableState extends State {
@@ -18,6 +20,9 @@ public class ResetTableState extends State {
 		}
 		
 		table.hardReset();
+		
+		Collections.rotate(table.getPlayers(), 1);
+		
 		super.process();
 	}
 	
