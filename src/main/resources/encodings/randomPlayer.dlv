@@ -5,6 +5,7 @@ fold | raise | call | allin | check.
 :- raise, not can_raise.
 :- call, not can_call.
 
+betCoefficient(50) :- high_card.
 betCoefficient(15) :- one_pair.
 betCoefficient(10) :- two_pair.
 betCoefficient(2) :- three_of_a_kind.
@@ -39,11 +40,7 @@ expectedValue(V) :- allin, probability(P), chips(C), pot(POT),
 :~ expectedValue(V), N = 300000 - V. [N@10, V]
 
 :~ fold, points(P), P < 1610. [P@20]
-
-
-
-
-
+:~ fold. [1@10]
 
 
 % FOLD
