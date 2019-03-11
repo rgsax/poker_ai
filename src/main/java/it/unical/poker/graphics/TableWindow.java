@@ -5,8 +5,8 @@ import it.unical.poker.game.Table;
 import it.unical.poker.game.states.ShowdownState;
 import it.unical.poker.game.states.State;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,6 +23,8 @@ public class TableWindow extends BorderPane {
 	private Label potLabel = new Label();
 	private Label betTextLabel = new Label("Bet:");
 	private Label betLabel = new Label();
+	
+	private Button continueButton = new Button("Continue");
 	
 	public TableWindow(Table table, Player player1, Player player2) {
 		this.table = table;
@@ -58,15 +60,20 @@ public class TableWindow extends BorderPane {
 		this.setBottom(playerPane1);
 		this.setTop(playerPane2);
 		
-		this.setLeft(new LogArea());
+		
+		VBox leftBox = new VBox(5);
+		LogArea logArea = new LogArea();
+		leftBox.getChildren().addAll(logArea, continueButton);
+		logArea.setMinHeight(600);
+		this.setLeft(leftBox);
 	}
 	
 	private void initEH() {
 		potLabel.textProperty().bind(table.getPot().asString());
 		betLabel.textProperty().bind(table.getBet().asString());
 		
-		this.setOnKeyPressed(event -> {
-			if(event.getCode().equals(KeyCode.ENTER) && State.STRING_STATE.get().equals(ShowdownState.class.getSimpleName()))
+		continueButton.setOnMouseClicked(event -> {
+			if(State.STRING_STATE.get().equals(ShowdownState.class.getSimpleName()))
 				resumeTimer();
 		});
 		

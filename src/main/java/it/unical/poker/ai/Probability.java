@@ -25,7 +25,9 @@ public class Probability {
 	
 	// http://suffe.cool/poker/evaluator.html
 	public static double approximateProbability(Card[] hand) {
-		return (double) countBeatenHands(hand) / Probability.total_hands; 
+		double p = (double) countBeatenHands(hand) / Probability.total_hands;
+		System.out.println("Probailità: " + p);
+		return p; 
 	}
 	
 	public static double approximateProbabilityNoHC(Card[] hand) {
@@ -101,18 +103,20 @@ public class Probability {
 		int handValue = Hand.evaluate(hand); 
 		int pt = 0; 
 		int beatenHands = 0; 
-		while (handValue < mins[pt]) {
+		while (handValue <= mins[pt]) {
 			beatenHands += freq[pt]; 
 			pt++; 
 		}
-		beatenHands += handValue - maxs[pt]; 
+		beatenHands += (handValue - maxs[pt])*120; 
 		
 		return beatenHands; 
 	}
 	
 	public static void main(String[] args) {
-		double p = approximateProbability( Hand.fromString("7h 5h 2c 2d 2s") );
-		System.out.println(p);
+		double p = approximateProbability( Hand.fromString("2h 2d 7c Ad 8s") );
+		double q = approximateProbability( Hand.fromString("Th Td 9c 2s 8s") );
+
+		System.out.println(String.format("p: %.2f q: %.2f", p, q));
 	}
 	
 	
