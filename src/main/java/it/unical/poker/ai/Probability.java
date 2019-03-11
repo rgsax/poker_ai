@@ -130,8 +130,8 @@ public class Probability {
 	}
 	
 	public static void main(String[] args) {
-		double p = approximateProbability( Hand.fromString("2h 2d 2c 4d 9s") );
-		double q = approximateProbability( Hand.fromString("8h 8d 4c 4h Ts") );
+		double p = approximateProbability( Hand.fromString("Ts Tc 5c 6d 7h") );
+		double q = approximateProbability( Hand.fromString("Ah 3h 4h Qd 5d") );
 		System.out.println(String.format("p: %.5f q: %.5f ", p, q));
 	}
 	

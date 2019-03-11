@@ -38,8 +38,6 @@ expectedValue(V) :- allin, probability(P), chips(C), pot(POT),
 	V = P * POT - (100 - P) * C.
 
 :~ expectedValue(V), N = 300000 - V. [N@10, V]
-
-%:~ fold, points(P), P < 1610. [P@20]
 :~ fold. [1@10]
 
 
