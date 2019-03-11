@@ -40,7 +40,7 @@ public class Probability {
 	}
 	
 
-	// http://suffe.cool/poker/evaluator.html
+	// http://suffe.cool/poker/evaluator.html + vedi phe.Hand::evaluate
 	private static int countBeatenHands(Card[] hand) {
 		/*if (val > 6185)
 			return (HandRank.HIGH_CARD); // 1277 high card
@@ -60,6 +60,10 @@ public class Probability {
 			return (HandRank.FOUR_OF_A_KIND); // 156 four-kind
 		return (HandRank.STRAIGHT_FLUSH); // 10 straight-flushes
 		 */
+		
+		// max[_]	è il punteggio MINIMO per il tipo di punto _
+		// min[_]	è il punteggio MASSIMO per i tipo di punto _
+		// [_]		è il numero di mani per il tipo di punto _ (con permutazioni, con combinazioni di semi)
 		
 		int minHighcard = 7500;
 		int maxHighcard = 6186;
@@ -93,34 +97,42 @@ public class Probability {
 		int maxFour = 11; 
 		int four = 624; 
 		
-		int sflush = 1; 
+		int minSflush = 10;
+		int maxSflush = 1;
 		int straightFlushes = 40; 
 		
-		int mins[] = {minHighcard, minOnePair, minTwoPair, minThree, minStraight, minFlush, minHouse, minFour, sflush};
-		int maxs[] = {maxHighcard, maxOnePair, maxTwoPair, maxThree, maxStraight, maxFlush, maxHouse, maxFour, sflush};
-		int freq[] = {highcards, onePair, twoPair, threeKind, straight, flush, fhouse, four, straightFlushes};
+		int mins[] = {minHighcard, minOnePair, minTwoPair, minThree,  minStraight, minFlush, minHouse, minFour, minSflush};
+		int maxs[] = {maxHighcard, maxOnePair, maxTwoPair, maxThree,  maxStraight, maxFlush, maxHouse, maxFour, maxSflush};
+		int freq[] = {highcards,   onePair,    twoPair,    threeKind, straight,    flush,    fhouse,   four,    straightFlushes};
 				
 		int handValue = Hand.evaluate(hand); 
 		int pt = 0; 
 		int beatenHands = 0; 
 		
 		System.out.println("handvalue: " + handValue + " maxs: " + maxs[pt]);
-		while (handValue < maxs[pt]) {
+		
+		// il punteggio della mia mano è inferiore al min del range per una determinata categorie
+		// di punti -> batto la frequenza di quella mano
+		while (handValue <= maxs[pt]) {
 			beatenHands += freq[pt]; 
-			System.out.println("BEAT: " + freq[pt]);
+			//System.out.println("BEAT: " + freq[pt]);
 			++pt;
 		}
 		
-		System.out.println("Beating: " + (mins[pt] - handValue));
-		beatenHands += (mins[pt] - handValue)*120;
+		// pt è l'indice del punto che ho in mano.
+		// Batto esattamente mins[pt]-handValue mani _distinte_, non tengo conto della frequenza
+		//System.out.println("Beating: " + (mins[pt] - handValue));
+		
+		// Stimo la frequenza dei punti che batto come (#mani_distinte / #mani_totali * freq)
+		beatenHands += (int) ((double) (mins[pt] - handValue) / (double) (mins[pt] - maxs[pt]) * freq[pt]);
 		
 		return beatenHands; 
 	}
 	
 	public static void main(String[] args) {
-		double p = approximateProbability( Hand.fromString("4h 4d Ac Qd 5s") );
-		//System.out.println(Hand.evaluate(Hand.fromString("7d 5d 4d 3h 2h")));
-		System.out.println(String.format("p: %.5f ", p));
+		double p = approximateProbability( Hand.fromString("2h 2d 2c 4d 9s") );
+		double q = approximateProbability( Hand.fromString("8h 8d 4c 4h Ts") );
+		System.out.println(String.format("p: %.5f q: %.5f ", p, q));
 	}
 	
 	
