@@ -35,7 +35,7 @@ public class Probability {
 		if (beaten - 1302540 <= 0) return 0.0; 
 		
 		double p = (double) (beaten - 1302540) / Probability.total_hands; 
-		System.out.println("PROBABILITÀ: " + p);
+		System.out.println("PROBABILIT À (non coppie): " + p);
 		return p; 
 	}
 	
@@ -61,36 +61,36 @@ public class Probability {
 		return (HandRank.STRAIGHT_FLUSH); // 10 straight-flushes
 		 */
 		
-		int minHighcard = 6186;
-		int maxHighcard = 3325;
+		int minHighcard = 7500;
+		int maxHighcard = 6186;
 		int highcards = 1302540; 
 		
-		int minOnePair = 3326; 
-		int maxOnePair = 2467; 
+		int minOnePair = 6185; 
+		int maxOnePair = 3326; 
 		int onePair = 1098240; 
 		
-		int minTwoPair = 2468; 
-		int maxTwoPair = 1609;  
+		int minTwoPair = 3325; 
+		int maxTwoPair = 2468;  
 		int twoPair = 123552; 
 		
-		int minThree = 1610; 
-		int maxThree = 1599; 
+		int minThree = 2467; 
+		int maxThree = 1610; 
 		int threeKind = 54912; 
 		
-		int minStraight = 1600; 
-		int maxStraight = 322; 
+		int minStraight = 1609; 
+		int maxStraight = 1600; 
 		int straight = 10200; 
 		
-		int minFlush = 323; 
-		int maxFlush = 166; 
+		int minFlush = 1599; 
+		int maxFlush = 323; 
 		int flush = 5108; 
 		
-		int minHouse = 167; 
-		int maxHouse = 10; 
+		int minHouse = 322; 
+		int maxHouse = 167; 
 		int fhouse = 3744; 
 		
-		int minFour = 11; 
-		int maxFour = 2; 
+		int minFour = 166; 
+		int maxFour = 11; 
 		int four = 624; 
 		
 		int sflush = 1; 
@@ -103,20 +103,24 @@ public class Probability {
 		int handValue = Hand.evaluate(hand); 
 		int pt = 0; 
 		int beatenHands = 0; 
-		while (handValue <= mins[pt]) {
+		
+		System.out.println("handvalue: " + handValue + " maxs: " + maxs[pt]);
+		while (handValue < maxs[pt]) {
 			beatenHands += freq[pt]; 
-			pt++; 
+			System.out.println("BEAT: " + freq[pt]);
+			++pt;
 		}
-		beatenHands += (handValue - maxs[pt])*120; 
+		
+		System.out.println("Beating: " + (mins[pt] - handValue));
+		beatenHands += (mins[pt] - handValue)*120;
 		
 		return beatenHands; 
 	}
 	
 	public static void main(String[] args) {
-		double p = approximateProbability( Hand.fromString("2h 2d 7c Ad 8s") );
-		double q = approximateProbability( Hand.fromString("Th Td 9c 2s 8s") );
-
-		System.out.println(String.format("p: %.2f q: %.2f", p, q));
+		double p = approximateProbability( Hand.fromString("4h 4d Ac Qd 5s") );
+		//System.out.println(Hand.evaluate(Hand.fromString("7d 5d 4d 3h 2h")));
+		System.out.println(String.format("p: %.5f ", p));
 	}
 	
 	
