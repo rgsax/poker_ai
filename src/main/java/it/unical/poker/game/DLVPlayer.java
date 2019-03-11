@@ -7,13 +7,19 @@ import it.unical.poker.ai.BettingStrategy;
 import it.unical.poker.ai.DiscardStrategy;
 
 public class DLVPlayer extends Player {
-	public DLVPlayer(String s, Table t) {
+	private File discardStrategy;
+	private File bettingStrategy;
+	
+	public DLVPlayer(String s, Table t, File discardStrategy, File bettingStrategy) {
 		super(s, t);
+		
+		this.discardStrategy = discardStrategy;
+		this.bettingStrategy = bettingStrategy;
 	}
 	
 	@Override
 	public void discard() {
-		DiscardStrategy ds = new DiscardStrategy(new File(DiscardStrategy.class.getClassLoader().getResource("encodings/discard_pokerNew.lp").getFile()));
+		DiscardStrategy ds = new DiscardStrategy(discardStrategy);
 		List<Integer> is = ds.chooseWhatToDiscard(cards); 
 		
 		drawHand(is);
@@ -21,7 +27,7 @@ public class DLVPlayer extends Player {
 	
 	@Override
 	public void bet() {
-		BettingStrategy bs = new BettingStrategy(new File(BettingStrategy.class.getClassLoader().getResource("encodings/randomPlayer.dlv").getFile()));	
+		BettingStrategy bs = new BettingStrategy(bettingStrategy);	
 		String action = bs.evaluate(this, t);
 		
 		if ( action.equals("fold")) {

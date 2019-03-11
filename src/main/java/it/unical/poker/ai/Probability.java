@@ -1,11 +1,8 @@
 package it.unical.poker.ai;
 
-import java.util.Arrays;
-
 import it.unical.poker.game.Deck;
 import phe.Card;
 import phe.Hand;
-import phe.HandRank;
 
 public class Probability {
 	private static int total_hands = 2598960;
@@ -100,10 +97,7 @@ public class Probability {
 		int mins[] = {minHighcard, minOnePair, minTwoPair, minThree, minStraight, minFlush, minHouse, minFour, sflush};
 		int maxs[] = {maxHighcard, maxOnePair, maxTwoPair, maxThree, maxStraight, maxFlush, maxHouse, maxFour, sflush};
 		int freq[] = {highcards, onePair, twoPair, threeKind, straight, flush, fhouse, four, straightFlushes};
-		
-		int sum = 0; 
-		for (int i = 0; i < 9; ++i) sum += freq[i]; 
-		
+				
 		int handValue = Hand.evaluate(hand); 
 		int pt = 0; 
 		int beatenHands = 0; 

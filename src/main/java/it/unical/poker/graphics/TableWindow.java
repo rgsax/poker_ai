@@ -1,6 +1,5 @@
 package it.unical.poker.graphics;
 
-import it.unical.poker.game.DLVPlayer;
 import it.unical.poker.game.Player;
 import it.unical.poker.game.Table;
 import it.unical.poker.game.states.ShowdownState;
@@ -25,14 +24,11 @@ public class TableWindow extends BorderPane {
 	private Label betTextLabel = new Label("Bet:");
 	private Label betLabel = new Label();
 	
-	public TableWindow(Table table) {
+	public TableWindow(Table table, Player player1, Player player2) {
 		this.table = table;
 		
-		Player p1 = new Player("Alice", table);
-		Player p2 = new DLVPlayer("Bob", table);
-		
-		playerPane1 = new PlayerPane(p1);
-		playerPane2 = new PlayerPane(p2);
+		playerPane1 = new PlayerPane(player1);
+		playerPane2 = new PlayerPane(player2);
 		
 		
 		timer = new StoppableStatefulAnimationTimer(this);

@@ -50,7 +50,7 @@ public class BettingStrategy {
 		int virtualPot = table.getPot().get() + table.getTotalBets();
 		
 		//int probability = (int)(Probability.montecarloSimulateHands(player.getCards(), 1000000) * 100);
-		int probability = (int) (Probability.approximateProbabilityNoHC(player.getCards()) * 100); 
+		int probability = (int) (Probability.approximateProbability(player.getCards())* 100) ; 
 		
 		program.addProgram(Hand.handRank(player.getCards()).toString().toLowerCase() + ".");
 		program.addProgram(String.format("probability(%d).", probability)); 
