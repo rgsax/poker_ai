@@ -37,6 +37,7 @@ public class ShowdownState extends State {
 		int rem = table.getPot().get() - potSplit * winners.size();
 		
 		for(Player player : winners) {
+			System.out.println("The winner is " + player.getName().get());
 			int currentSplit = potSplit;
 			if(rem > 0) {
 				currentSplit += rem;

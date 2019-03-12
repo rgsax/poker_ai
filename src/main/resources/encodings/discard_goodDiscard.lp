@@ -43,16 +43,6 @@ scalaReale :- scala, colore(_).
 :~ cartaAlta(V), scarta(V, S), V >= 12. [10@5, V]
 :~ tieni(V, _), not cartaAlta(V). [5@5, V]
 
-%possibileColore(S) :- seme(S), #count{ V : tieni(V, S) } >= 4.
-%:~ possibileColore(S), scarta(_, S). [45@10]
-
-%segue(V1, V2) :- mano(V1, _), mano(V2, _), V1 = V2 + 1.
-%catena(V1, V2) :- segue(V1, V2).
-%catena(V1, V3) :- catena(V1, V2), catena(V2, V3).
-%maxLunghezza(VMIN, VMAX) :- catena(VMIN, VMAX), VMAX = VMIN + N, N = #max{ X : catena(V1, V2), X = V2 - V1 }.
-%scalaVicina(VMIN, VMAX) :- maxLunghezza(VMIN, VMAX), VMAX - VMIN >= 4.
-%:~ scalaVicina(VMIN, VMAX), scarta(V, _), V >= VMIN, V <= VMAX. [45@10, VMIN]
-
 
 
 
