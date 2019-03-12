@@ -25,8 +25,11 @@ public class BettingState extends State {
 	
 	@Override
 	public void process() {
-		if(player instanceof DLVPlayer)
+		if(player instanceof DLVPlayer) {
 			player.bet();
+			player.setHasAlreadyBet(true);
+		}
+		
 		
 		super.process();
 	}

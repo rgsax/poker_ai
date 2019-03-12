@@ -12,6 +12,16 @@ import javafx.beans.property.StringProperty;
 import phe.Card;
 
 public class Player {
+	boolean hasAlreadyBet = false; 
+	
+	public boolean isHasAlreadyBet() {
+		return hasAlreadyBet;
+	}
+
+	public void setHasAlreadyBet(boolean hasAlreadyBet) {
+		this.hasAlreadyBet = hasAlreadyBet;
+	}
+
 	public Card[] getCards() {
 		return cards;
 	}

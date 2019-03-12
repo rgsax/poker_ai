@@ -21,42 +21,48 @@ public class StoppableStatefulAnimationTimer extends AnimationTimer {
 	
 	@Override
 	public void handle(long now) {
-		state.process();
-		
-		tableWindow.refreshPlayersCards();
-		
-//		if(state instanceof BettingState) {
-//			this.stop();
-//			System.out.println("Stopping for BettingState");
-//		}
-		
-		
-//		else
-		
-		if( ( state instanceof BettingState || state instanceof DiscardState)  && !(state.getCurrentPlayer() instanceof DLVPlayer)) {
-//			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
-			this.stop();
-		} 
-		else if(state instanceof ShowdownState){
-			this.stop();
+		if (state == null) {
+			this.stop(); 
+		} else {
+			state.process();
+			
+			tableWindow.refreshPlayersCards();
+			
+	//		if(state instanceof BettingState) {
+	//			this.stop();
+	//			System.out.println("Stopping for BettingState");
+	//		}
+			
+			
+	//		else
+			
+			if( ( state instanceof BettingState || state instanceof DiscardState)  && !(state.getCurrentPlayer() instanceof DLVPlayer)) {
+	//			System.out.println("Stopping for DiscardState with player " + state.getCurrentPlayer().getClass().getSimpleName());
+				this.stop();
+			} 
+			else if(state instanceof ShowdownState){
+				this.stop();
+			}
+			else {
+				state = state.next();
+			}	
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				System.out.println("Bravo, hai rotto tutto!");
+			}
+			
+			if(state == null)
+				this.stop();
 		}
-		else {
-			state = state.next();
-		}	
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			System.out.println("Bravo, hai rotto tutto!");
-		}
-		
-		if(state == null)
-			this.stop();
 	}
 	
 	public void resume() {
-		state = state.next();
-		start();
+		if (state != null) {
+			state = state.next();
+			start();
+		}
 	}
 
 }

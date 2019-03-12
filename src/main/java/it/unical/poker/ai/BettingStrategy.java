@@ -61,6 +61,7 @@ public class BettingStrategy {
 		program.addProgram(String.format("ante(%d).", table.getAnte().get())); 
 		program.addProgram(String.format("toCall(%d).", player.getToCall().get()));		
 		program.addProgram(String.format("points(%d).", Hand.evaluate(player.getCards())));
+		program.addProgram(String.format("hasAlreadyBet(%b).", player.isHasAlreadyBet()));
 		
 		program.addProgram(String.format("minRaise(%d).", 1));
 		program.addProgram(String.format("maxRaise(%d).", player.getChips().get() - 1 - player.getToCall().get()));
@@ -84,8 +85,9 @@ public class BettingStrategy {
 				String amount = "";
 				
 				for(String atom : a.getAnswerSet())
-					if(atom.contains("raiseAmount"))
+					if(atom.contains("raiseAmount")) {
 						amount = atom.substring(atom.lastIndexOf("(") + 1, atom.length() - 1);
+					}
 				
 				player.raiseAmount.set(Integer.parseInt(amount));
 				return "raise"; 

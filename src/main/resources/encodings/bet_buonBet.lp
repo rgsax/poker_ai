@@ -40,6 +40,7 @@ expectedValue(V) :- allin, probability(P), chips(C), pot(POT),
 :~ expectedValue(V), N = 300000 - V. [N@10, V]
 :~ fold. [1@10]
 
+:- allin, probability(P), P < 80.
 
 % FOLD
 fold_expectedValue(-V) :- can_fold, myBet(V).

@@ -19,6 +19,8 @@ public class ResetTableState extends State {
 			table.increaseAnte();
 		}
 		
+		table.getPlayers().forEach(p -> p.setHasAlreadyBet(false));
+		
 		table.hardReset();
 		
 		Collections.rotate(table.getPlayers(), 1);
@@ -28,6 +30,8 @@ public class ResetTableState extends State {
 	
 	@Override
 	public State next() {
+
+		
 		super.next();
 		
 		return new DealCardsState(table);

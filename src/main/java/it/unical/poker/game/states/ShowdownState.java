@@ -56,8 +56,16 @@ public class ShowdownState extends State {
 		
 		table.hardReset();
 		
+		for (Player p: table.getPlayers()) {
+			if (p.getChips().get() == 0) {
+				return null; 
+			}
+		}
+		
 		if(table.getActivePlayers().get() > 1)
 			return new ResetTableState(table);
+		
+		
 		return null;
 	}
 }

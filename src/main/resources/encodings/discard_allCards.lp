@@ -8,7 +8,6 @@ discard_HELPER(V, clubs) :- scarta(V, fiori).
 discard_HELPER(V, diamonds) :- scarta(V, quadri).
 discard_HELPER(V, spades) :- scarta(V, picche).
 
-
 seme(cuori). 
 seme(quadri). 
 seme(fiori). 
